@@ -23,7 +23,7 @@ Numbers can be signed decimals. Lengths default to `px`, times to `ms`, and angl
 
 Expansion works in declaration positions, including nested SCSS blocks. It preserves existing semicolons and supports undo. Comments, strings, selectors, property values, interpolation, and multiple carets are excluded. Built-in Emmet remains available.
 
-`.xcss` is associated with the IDE's existing CSS file type. Explicit user file associations remain authoritative; if another plugin owns the extension, choose the desired association in Settings → Editor → File Types. CrossEmmet does not implement a separate XCSS language.
+CrossBreeze is responsible for associating `.xcss` with CSS. CrossEmmet does not register or change that association; its expansion works when CrossBreeze or an existing user association provides CSS language support.
 
 See the generated [abbreviation catalog](docs/abbreviations.md).
 

@@ -6,7 +6,6 @@ import dev.crossemmet.engine.ExpansionEngine
 import dev.crossemmet.engine.ExpansionCandidate
 import com.intellij.openapi.actionSystem.IdeActions
 import com.intellij.openapi.fileTypes.FileTypeManager
-import com.intellij.openapi.fileTypes.PlainTextFileType
 import com.intellij.openapi.application.ApplicationManager
 
 class EditorIntegrationTest : BasePlatformTestCase() {
@@ -23,7 +22,20 @@ class EditorIntegrationTest : BasePlatformTestCase() {
     }
     fun testCssInsertion() = checkExpansion("test.css", "a { mi16<caret> }", "a { margin-inline: 16px<caret>; }")
     fun testScssNestedInsertion() = checkExpansion("test.scss", ".a { .b { mis-8<caret>; } }", ".a { .b { margin-inline-start: -8px<caret>; } }")
-    fun testXcssInsertion() = checkExpansion("test.xcss", "a { mi1.5rem<caret> }", "a { margin-inline: 1.5rem<caret>; }")
+    fun testXcssInsertionWithExternalCssAssociation() {
+        val manager = FileTypeManager.getInstance()
+        val original = manager.getFileTypeByExtension("xcss")
+        val css = manager.getFileTypeByExtension("css")
+        ApplicationManager.getApplication().runWriteAction { manager.associateExtension(css, "xcss") }
+        try {
+            checkExpansion("test.xcss", "a { mi1.5rem<caret> }", "a { margin-inline: 1.5rem<caret>; }")
+        } finally {
+            ApplicationManager.getApplication().runWriteAction {
+                manager.removeAssociatedExtension(css, "xcss")
+                if (original != com.intellij.openapi.fileTypes.UnknownFileType.INSTANCE) manager.associateExtension(original, "xcss")
+            }
+        }
+    }
     fun testEmptyValueCaret() = checkExpansion("test.css", "a { mis<caret> }", "a { margin-inline-start: <caret>; }")
     fun testSpacedSemicolon() = checkExpansion("test.css", "a { mis8<caret> ; }", "a { margin-inline-start: 8px<caret> ; }")
     fun testActionAndUndo() {
@@ -33,17 +45,11 @@ class EditorIntegrationTest : BasePlatformTestCase() {
         myFixture.performEditorAction(IdeActions.ACTION_UNDO)
         myFixture.checkResult("a { pbs8<caret>; }")
     }
-    fun testXcssAssociationAndOverride() {
+    fun testXcssHasNoPluginAssociation() {
         val manager = FileTypeManager.getInstance()
-        val original = manager.getFileTypeByExtension("xcss")
-        assertEquals("CSS", original.name)
-        ApplicationManager.getApplication().runWriteAction { manager.associateExtension(PlainTextFileType.INSTANCE, "xcss") }
-        try {
-            myFixture.configureByText("test.xcss", "a { mis8<caret>; }")
-            assertNull(AbbreviationContext.find(myFixture.file, myFixture.caretOffset))
-        } finally {
-            ApplicationManager.getApplication().runWriteAction { manager.associateExtension(original, "xcss") }
-        }
+        assertFalse(manager.getFileTypeByExtension("xcss").name == "CSS")
+        myFixture.configureByText("test.xcss", "a { mis8<caret>; }")
+        assertNull(AbbreviationContext.find(myFixture.file, myFixture.caretOffset))
     }
     fun testExcludedContexts() {
         listOf("/* { mi16<caret> */", "a { color: mi16<caret>; }", "mi16<caret> {}", "a { content: '{ mi16<caret>'; }", "a { .mi16<caret> {} }", "a { #{mi16<caret>} }").forEach {

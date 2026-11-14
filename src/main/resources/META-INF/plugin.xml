@@ -11,7 +11,6 @@
         <completion.confidence language="SCSS" order="first" implementationClass="dev.crossemmet.ide.CrossEmmetCompletionConfidence"/>
         <completion.contributor language="CSS" order="first" implementationClass="dev.crossemmet.ide.CrossEmmetCompletion"/>
         <completion.contributor language="SCSS" order="first" implementationClass="dev.crossemmet.ide.CrossEmmetCompletion"/>
-        <fileType name="CSS" extensions="xcss"/>
     </extensions>
     <actions>
         <action id="CrossEmmet.Expand" class="dev.crossemmet.ide.ExpandAction" text="Expand CrossEmmet Abbreviation" description="Expand a CSS property abbreviation"/>
