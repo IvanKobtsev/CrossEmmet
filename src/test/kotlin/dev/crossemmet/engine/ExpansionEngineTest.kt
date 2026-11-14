@@ -4,6 +4,10 @@ import org.junit.Test
 import kotlin.test.*
 
 class ExpansionEngineTest {
+    @Test fun textAlignCenter() {
+        assertEquals("text-align: center;", ExpansionEngine.expand("tac").single().declaration)
+        assertEquals("width: 12px;", ExpansionEngine.expand("w12").single { it.property.name == "width" }.declaration)
+    }
     private fun declaration(input: String, property: String) = ExpansionEngine.expand(input).single { it.property.name == property }.declaration
     @Test fun logicalLengths() {
         assertEquals("margin-inline: 16px;", declaration("mi16", "margin-inline"))

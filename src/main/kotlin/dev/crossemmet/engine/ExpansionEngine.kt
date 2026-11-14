@@ -19,6 +19,11 @@ object ExpansionEngine {
     private val lengths = setOf("px", "rem", "em", "ex", "ch", "cap", "ic", "lh", "rlh", "vw", "vh", "vi", "vb", "vmin", "vmax", "svw", "svh", "svi", "svb", "svmin", "svmax", "lvw", "lvh", "lvi", "lvb", "lvmin", "lvmax", "dvw", "dvh", "dvi", "dvb", "dvmin", "dvmax", "cqw", "cqh", "cqi", "cqb", "cqmin", "cqmax", "cm", "mm", "q", "in", "pt", "pc", "%")
 
     fun expand(input: String): List<ExpansionCandidate> {
+        if (input == "tac") {
+            val property = PropertyCatalog.properties.single { it.name == "text-align" }
+            val declaration = "text-align: center;"
+            return listOf(ExpansionCandidate(property, declaration, declaration.length - 1))
+        }
         val match = syntax.matchEntire(input) ?: return emptyList()
         val (alias, number, unit) = match.destructured
         if (number.isEmpty() && unit.isNotEmpty()) return emptyList()

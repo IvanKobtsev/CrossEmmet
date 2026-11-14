@@ -6,8 +6,11 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.css</depends>
     <extensions defaultExtensionNs="com.intellij">
-        <completion.contributor language="CSS" implementationClass="dev.crossemmet.ide.CrossEmmetCompletion"/>
-        <completion.contributor language="SCSS" implementationClass="dev.crossemmet.ide.CrossEmmetCompletion"/>
+        <typedHandler implementation="dev.crossemmet.ide.CrossEmmetTypedHandler"/>
+        <completion.confidence language="CSS" order="first" implementationClass="dev.crossemmet.ide.CrossEmmetCompletionConfidence"/>
+        <completion.confidence language="SCSS" order="first" implementationClass="dev.crossemmet.ide.CrossEmmetCompletionConfidence"/>
+        <completion.contributor language="CSS" order="first" implementationClass="dev.crossemmet.ide.CrossEmmetCompletion"/>
+        <completion.contributor language="SCSS" order="first" implementationClass="dev.crossemmet.ide.CrossEmmetCompletion"/>
         <fileType name="CSS" extensions="xcss"/>
     </extensions>
     <actions>

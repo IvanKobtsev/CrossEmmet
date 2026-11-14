@@ -4,11 +4,13 @@ A Kotlin JetBrains plugin that expands CSS property initials, including logical 
 
 ## Usage
 
-Type an abbreviation inside a declaration block and select its **CrossEmmet** completion, or invoke **Expand CrossEmmet Abbreviation** through Find Action. Assign a shortcut under Settings → Keymap by searching for that action.
+Type an abbreviation inside a declaration block: completion opens automatically and refreshes as you type, including numbers and units. Press Enter to accept the selected **CrossEmmet** expansion. You can also invoke **Expand CrossEmmet Abbreviation** through Find Action and assign a shortcut under Settings → Keymap.
 
 | Input | Expansion |
 | --- | --- |
 | `mi16` | `margin-inline: 16px;` |
+| `w12` | `width: 12px;` |
+| `tac` | `text-align: center;` |
 | `mis-8` | `margin-inline-start: -8px;` |
 | `mi1.5rem` | `margin-inline: 1.5rem;` |
 | `pbs0` | `padding-block-start: 0;` |
@@ -17,7 +19,7 @@ Type an abbreviation inside a declaration block and select its **CrossEmmet** co
 
 Abbreviations use the first letter of each hyphen-separated property word. Single-word properties use one letter. Collisions are intentional: completion lists all matches, and the action opens a chooser. For example, `mi` offers `margin-inline` and `max-inline-size`. This vocabulary differs from Emmet.
 
-Numbers can be signed decimals. Lengths default to `px`, times to `ms`, and angles to `deg`. Unitless properties retain bare numbers; integer properties reject fractions. Explicit length units, percentages, time units, and angle units are accepted only for their corresponding categories. Unitless length zero stays `0`. Complex values, keywords, colors, functions, chained declarations, and custom aliases are not abbreviated in v1; expand the property alone and enter its value normally.
+Numbers can be signed decimals. Lengths default to `px`, times to `ms`, and angles to `deg`. Unitless properties retain bare numbers; integer properties reject fractions. Explicit length units, percentages, time units, and angle units are accepted only for their corresponding categories. Unitless length zero stays `0`. The keyword shortcut `tac` expands to `text-align: center;`. Other keywords, complex values, colors, functions, chained declarations, and custom aliases are not abbreviated; expand the property alone and enter its value normally.
 
 Expansion works in declaration positions, including nested SCSS blocks. It preserves existing semicolons and supports undo. Comments, strings, selectors, property values, interpolation, and multiple carets are excluded. Built-in Emmet remains available.
 

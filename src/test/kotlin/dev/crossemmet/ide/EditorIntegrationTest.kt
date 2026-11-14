@@ -10,6 +10,17 @@ import com.intellij.openapi.fileTypes.PlainTextFileType
 import com.intellij.openapi.application.ApplicationManager
 
 class EditorIntegrationTest : BasePlatformTestCase() {
+    fun testAutomaticWidthCompletion() = checkAutomaticCompletion("w12", "width: 12px")
+    fun testAutomaticKeywordCompletion() = checkAutomaticCompletion("tac", "text-align: center")
+    private fun checkAutomaticCompletion(abbreviation: String, declaration: String) {
+        myFixture.configureByText("test.css", "a { $abbreviation<caret>; }")
+        val items = myFixture.complete(com.intellij.codeInsight.completion.CompletionType.BASIC, 0)
+        val item = items?.firstOrNull { (it.`object` as? ExpansionCandidate)?.declaration == "$declaration;" }
+        assertNotNull("Automatic completion should offer $abbreviation", item)
+        assertEquals("Enter should accept the expected expansion", item, myFixture.lookup.currentItem)
+        myFixture.finishLookup('\n')
+        myFixture.checkResult("a { $declaration<caret>; }")
+    }
     fun testCssInsertion() = checkExpansion("test.css", "a { mi16<caret> }", "a { margin-inline: 16px<caret>; }")
     fun testScssNestedInsertion() = checkExpansion("test.scss", ".a { .b { mis-8<caret>; } }", ".a { .b { margin-inline-start: -8px<caret>; } }")
     fun testXcssInsertion() = checkExpansion("test.xcss", "a { mi1.5rem<caret> }", "a { margin-inline: 1.5rem<caret>; }")
