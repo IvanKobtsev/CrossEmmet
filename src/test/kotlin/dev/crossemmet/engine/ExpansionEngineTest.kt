@@ -4,6 +4,18 @@ import org.junit.Test
 import kotlin.test.*
 
 class ExpansionEngineTest {
+    @Test fun keywordShortcuts() {
+        mapOf("df" to "display: flex;", "jcc" to "justify-content: center;", "aic" to "align-items: center;", "fdc" to "flex-direction: column;", "posst" to "position: sticky;").forEach { (alias, expected) ->
+            assertEquals(expected, ExpansionEngine.expand(alias).single().declaration)
+        }
+        KeywordCatalog.shortcuts.forEach {
+            val result = ExpansionEngine.expand(it.abbreviation).single()
+            assertEquals("${it.property}: ${it.value};", result.declaration)
+            assertEquals(result.declaration.lastIndex, result.caretOffset)
+            assertTrue(ExpansionEngine.expand(it.abbreviation + ":").isEmpty())
+        }
+        assertEquals("animation-iteration-count: 2;", ExpansionEngine.expand("aic2").single().declaration)
+    }
     @Test fun textAlignCenter() {
         assertEquals("text-align: center;", ExpansionEngine.expand("tac").single().declaration)
         assertEquals("width: 12px;", ExpansionEngine.expand("w12").single { it.property.name == "width" }.declaration)

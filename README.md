@@ -11,6 +11,9 @@ Type an abbreviation inside a declaration block: completion opens automatically 
 | `mi16` | `margin-inline: 16px;` |
 | `w12` | `width: 12px;` |
 | `tac` | `text-align: center;` |
+| `df` | `display: flex;` |
+| `jcc` | `justify-content: center;` |
+| `aic` | `align-items: center;` |
 | `mis-8` | `margin-inline-start: -8px;` |
 | `mi1.5rem` | `margin-inline: 1.5rem;` |
 | `pbs0` | `padding-block-start: 0;` |
@@ -19,7 +22,9 @@ Type an abbreviation inside a declaration block: completion opens automatically 
 
 Abbreviations use the first letter of each hyphen-separated property word. Single-word properties use one letter. Collisions are intentional: completion lists all matches, and the action opens a chooser. For example, `mi` offers `margin-inline` and `max-inline-size`. This vocabulary differs from Emmet.
 
-Numbers can be signed decimals. Lengths default to `px`, times to `ms`, and angles to `deg`. Unitless properties retain bare numbers; integer properties reject fractions. Explicit length units, percentages, time units, and angle units are accepted only for their corresponding categories. Unitless length zero stays `0`. The keyword shortcut `tac` expands to `text-align: center;`. Other keywords, complex values, colors, functions, chained declarations, and custom aliases are not abbreviated; expand the property alone and enter its value normally.
+Numbers can be signed decimals. Lengths default to `px`, times to `ms`, and angles to `deg`. Unitless properties retain bare numbers; integer properties reject fractions. Explicit length units, percentages, time units, and angle units are accepted only for their corresponding categories. Unitless length zero stays `0`.
+
+Common property/value shortcuts use no colon: `df`, `dg`, `jcc`, `jcsb`, `aic`, `fdc`, `fww`, `posa`, `tac`, `oh`, `cp`, and more. The catalog covers layout, flex/grid alignment, typography, overflow, backgrounds, borders, interaction, and containment. Exact keyword shortcuts take precedence over property-only initials; numeric suffixes still work (`aic` → `align-items: center;`, `aic2` → `animation-iteration-count: 2;`). See the full generated catalog below. Complex values, colors, functions, chained declarations, and custom aliases are not abbreviated; expand the property alone and enter its value normally.
 
 Expansion works in declaration positions, including nested SCSS blocks. It preserves existing semicolons and supports undo. Comments, strings, selectors, property values, interpolation, and multiple carets are excluded. Built-in Emmet remains available.
 

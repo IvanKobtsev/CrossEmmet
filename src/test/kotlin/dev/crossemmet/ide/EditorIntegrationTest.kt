@@ -11,6 +11,8 @@ import com.intellij.openapi.application.ApplicationManager
 class EditorIntegrationTest : BasePlatformTestCase() {
     fun testAutomaticWidthCompletion() = checkAutomaticCompletion("w12", "width: 12px")
     fun testAutomaticKeywordCompletion() = checkAutomaticCompletion("tac", "text-align: center")
+    fun testAutomaticFlexCompletion() = checkAutomaticCompletion("df", "display: flex")
+    fun testAutomaticJustifyCompletion() = checkAutomaticCompletion("jcc", "justify-content: center")
     private fun checkAutomaticCompletion(abbreviation: String, declaration: String) {
         myFixture.configureByText("test.css", "a { $abbreviation<caret>; }")
         val items = myFixture.complete(com.intellij.codeInsight.completion.CompletionType.BASIC, 0)
