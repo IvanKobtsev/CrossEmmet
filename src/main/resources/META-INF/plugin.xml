@@ -1,0 +1,16 @@
+<idea-plugin>
+    <id>dev.crossemmet.jetbrains</id>
+    <name>CrossEmmet</name>
+    <vendor>CrossEmmet</vendor>
+    <description>CSS abbreviation expansion with modern and logical properties for CSS, SCSS, and XCSS.</description>
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.css</depends>
+    <extensions defaultExtensionNs="com.intellij">
+        <completion.contributor language="CSS" implementationClass="dev.crossemmet.ide.CrossEmmetCompletion"/>
+        <completion.contributor language="SCSS" implementationClass="dev.crossemmet.ide.CrossEmmetCompletion"/>
+        <fileType name="CSS" extensions="xcss"/>
+    </extensions>
+    <actions>
+        <action id="CrossEmmet.Expand" class="dev.crossemmet.ide.ExpandAction" text="Expand CrossEmmet Abbreviation" description="Expand a CSS property abbreviation"/>
+    </actions>
+</idea-plugin>
