@@ -27,6 +27,8 @@ See the generated [abbreviation catalog](docs/abbreviations.md).
 
 ## Build and install
 
+GitHub Actions builds and verifies the plugin on every push and pull request, and can also be run manually. Download the `crossemmet-plugin` artifact from a successful CI run; plugin artifacts are retained for 30 days. Failed runs upload test and verifier diagnostics for 14 days.
+
 Requires JDK 25 and JetBrains CSS support. The initial compatibility target is WebStorm 2026.2.2 / platform 262; other CSS-enabled IDEs require verification before claiming support.
 
 ```powershell
